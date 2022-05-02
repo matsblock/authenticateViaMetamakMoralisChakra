@@ -1,24 +1,43 @@
-import logo from './logo.svg';
-import './App.css';
+import { Button, Alert, AlertIcon, AlertTitle, AlertDescription, Box, CloseButton} from '@chakra-ui/react';
+import { Container, Heading } from '@chakra-ui/react';
+import { useMoralis } from 'react-moralis';
+
 
 function App() {
+  const { authenticate, isAuthenticated, authError, logout, isAuthenticating, user } = useMoralis();
+
+  if (isAuthenticated) {
+    return (
+      <Container>
+        <Heading>Welcome, {user.attributes.username}</Heading>
+        <Button onClick={() => logout()}>Logout</Button>
+      </Container>
+    )
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Container>
+      Try Login
+      {authError && (
+      <Alert status='error'>
+        <AlertIcon />
+        <Box>
+          <AlertTitle>Atuhentication has failed!</AlertTitle>
+          <AlertDescription>
+            {authError.message}  
+          </AlertDescription>
+        </Box>
+        <CloseButton
+          alignSelf='flex-start'
+          position='relative'
+          right={-1}
+          top={-1}
+        />
+      </Alert>
+      )}
+      <Button isLoading={isAuthenticating} onClick={() => authenticate()}>Authenticate via Metamask</Button>
+
+    </Container>
   );
 }
 
