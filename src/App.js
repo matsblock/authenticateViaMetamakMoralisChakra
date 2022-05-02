@@ -2,6 +2,7 @@ import { Button, Alert, AlertIcon, AlertTitle, AlertDescription, Box, CloseButto
 import { Container, Heading } from '@chakra-ui/react';
 //import Moralis from 'moralis/types';
 import { useMoralis, useWeb3ExecuteFunction } from 'react-moralis';
+const cod = require('./codigo');
 
 
 function App() {
@@ -35,6 +36,12 @@ function App() {
         <Heading>Welcome, {user.attributes.username}, This is a Rinkeby test</Heading>
         <Button onClick={() => multiplicar()}>multiplicar</Button>
         <Button onClick={() => logout()}>Logout</Button>
+        
+        <h2>Contrato Multiplicar</h2>
+
+        <p>
+          {cod.codigo}
+        </p>
       </Container>
     )
   }
